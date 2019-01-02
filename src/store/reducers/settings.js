@@ -1,13 +1,27 @@
 import settingsActions from "../actions/settings";
 
 const initstate = {
-type: "",
-message: "",
-api_credentials:{}
+    type: "",
+    message: "",
+    api_credentials: {}
 };
 
 export default (state=initstate,payload)=>{
     switch(payload.type){
+
+        case settingsActions.UPDATE_YOUR_SETTINGS_WENT:
+        return {
+            ...state,
+            type: settingsActions.UPDATE_YOUR_SETTINGS_WENT,
+            message: payload.message
+        }
+
+        case settingsActions.UPDATE_YOUR_SETTINGS_FAILED:
+        return {
+            ...state,
+            type: settingsActions.UPDATE_YOUR_SETTINGS_FAILED,
+            message: payload.message
+        }
 
         case settingsActions.GET_API_KEY_REQUEST:
         return {

@@ -13,8 +13,7 @@ export default styled.div`
     overflow: auto;
     padding: 1em;
     padding-top: 3em;
-
-    background: black; //#1c2338; //royalblue;
+    background: #1b232d; //#1c2338; //royalblue;
     position: relative;
     
     .up{

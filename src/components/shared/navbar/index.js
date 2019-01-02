@@ -18,7 +18,8 @@ export default connect()(class Navbar extends React.Component{
           <nav>
             <div className="xs-12 sm-10 sm-off-1">
                 <div className="inner">
-                    <li><NavLink to="/dashboard">Analytics</NavLink></li>
+                    <li><NavLink to="/dashboard">My Orders</NavLink></li>
+                    <li><NavLink to="/dashboard/account">My Account</NavLink></li>
                     <li><NavLink to="/dashboard/products">Products</NavLink></li>
                     <li><NavLink to="/dashboard/withdrawals">Withdrawals</NavLink></li>
                     <li><NavLink to="/dashboard/settings">Settings</NavLink></li>

@@ -14,6 +14,8 @@ import moment from 'moment';
         this.state={
             data: [],
             isFirstFetch: true,
+            fetching: false,
+            present_filter: ""
         }
     }
 
@@ -23,6 +25,7 @@ import moment from 'moment';
         
         case "deleted":
         return this.setState({
+            present_filter: "deleted",
             data: this.props.data.filter(p=>{
                 return p.deleted === true
             })
@@ -30,6 +33,7 @@ import moment from 'moment';
         
         case "not-deleted":
         return this.setState({
+            present_filter: "not-deleted",
             data: this.props.data.filter(p=>{
                 return p.deleted === false
             })
@@ -38,40 +42,52 @@ import moment from 'moment';
     
         default:
             return this.setState({
+                present_filter: "",
                 data: this.props.data
             })
     }
-}
+    }
 
     componentWillReceiveProps(nextProps){
         if(this.props !== nextProps){
 
-            if(this.state.data.length === 0 && nextProps.data.length > 0){
+            if(this.state.isFirstFetch ===false && nextProps.type === product.FIND_SELLER_PRODUCTS_WENT){
                 this.setState({
-                    data: nextProps.data.filter(p=>{
-                        return p.deleted === false
-                    }),
-                    isFirstFetch: false
-                })
-            }
-            else if (this.props.data !== nextProps.data){
-                this.setState({
+                    isFirstFetch: true,
                     data: nextProps.data.filter(p=>{
                         return p.deleted === false
                     })
                 })
             }
 
-            if(nextProps.type === product.DELETE_PRODUCT_FAILED){
+            if(this.state.isFirstFetch === true && nextProps.type === product.FIND_SELLER_PRODUCTS_WENT){
+                this.setState({
+                    data: nextProps.data.filter(p=>{
+                        return p.deleted === false
+                    })
+                })
+            }
+            
+            this.setState({
+                fetching: nextProps.type === product.FIND_SELLER_PRODUCTS_REQUEST
+            })
+            
+            if( nextProps.type === product.DELETE_PRODUCT_FAILED ){
                 notify(<p style={{color: 'white'}}>{nextProps.message}</p>,"error")
             }
-            if(nextProps.type === product.DELETE_PRODUCT_WENT){
+            if( nextProps.type === product.DELETE_PRODUCT_WENT ){
                 notify(<p style={{color: 'white'}}> {nextProps.message}</p>,"success");
+                this.setState({
+                    data: nextProps.data.filter(p=>{
+                        return this.state.present_filter !== "not-deleted" ? p: p.deleted === false
+                    })
+                })
             }
         }
     }
 
     render(){
+
         return <Tw className="xs-12">
           <div className="f-r">
                 <div className="form-group">
@@ -98,15 +114,14 @@ import moment from 'moment';
             </div>   
         </div>
 
-  
-
         {
-            this.state.isFirstFetch ?
+            this.state.isFirstFetch && this.state.fetching &&
                 <div className='xs-12 rowed fetching'>
                     <p>Fetching Products...</p>
                 </div>
-            :
-            this.state.data.length === 0 ?
+        }
+
+        {    this.state.data.length === 0 && this.state.fetching === false?
                 <div className='xs-12 rowed fetching'>
                     <p>No Products Found</p>
                 </div>
@@ -124,6 +139,14 @@ import moment from 'moment';
                     <label>Product Description</label>
                     <p> { datum.description }</p>
             
+
+                    <label>Product Short Code </label>
+                    <p>{ datum.short_code }</p>
+
+                    <label>Product Long ID</label>
+                    <p> { datum.product_id }</p>
+            
+                    
                     <label> Product Price </label>
                     <p> { datum.price } {datum.currency}</p>
 

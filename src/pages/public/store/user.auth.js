@@ -1,24 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { signin,signup,plain_clear } from '../../../store/action-creators/auth';
+import { signin,signup, plain_clear } from '../../../store/action-creators/auth';
+import { update_step } from '../../../store/action-creators/store';
 import { notify } from '../../../store/action-creators/app';
 // import store from '../../../store/actions/store';
 // import Spinner from "../../../components/shared/spinner";
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import auth from '../../../store/actions/auth';
-import { retrieveToken } from '../../../helpers/TokenManager';
 
 class UserLogin extends React.Component{
     constructor(props){
         super(props);
         props.plain_clear();
         this.state = {
+           
             isSignedIn: false,
             isSignedUp: false,
             
             email:"",
             phone_number:"",
+            address:"",
             name:"",
             verify_password:"",
             password:"",
@@ -26,13 +28,6 @@ class UserLogin extends React.Component{
     }
 }
 
-componentWillMount(){
-    if(Boolean(retrieveToken()) === true) {
-        return this.props.proceed(0)
-    }else{
-        return this.props.proceed(1)
-    }
-}
 
 handleChange=e=>{
     e.persist();
@@ -54,7 +49,7 @@ componentWillReceiveProps(nextProps){
                     isSignedIn: true
                 },()=>{
                     notify(<p style={{color: 'white'}}> {nextProps.auth_message}</p>,"success")
-                     nextProps.proceed(2);    
+                    nextProps.update_step(2);   
                 })
             }
 
@@ -63,12 +58,12 @@ componentWillReceiveProps(nextProps){
             }
 
             if(nextProps.auth_type === auth.SIGNUP_SUCCESSFUL && this.state.isSignedUp === false){
-                
+                console.log("here")
                 this.setState({
                     isSignedUp: true
                 },()=>{
                     notify(<p style={{color: 'white'}}> {nextProps.auth_message}</p>,"success")
-                    nextProps.proceed(2);    
+                    nextProps.update_step(2);   
                 })
             
             }
@@ -92,8 +87,11 @@ signup = (e) => {
         password: this.state.password,
         phone_number:this.state.phone_number,
         name:this.state.name,
+        address: this.state.address,
         verify_password:this.state.verify_password,
-        role: "Buyer"
+        role: "Buyer",
+        attempting_to_buy: true
+
     })
 }
 
@@ -107,7 +105,6 @@ render(){
         <div className='form-group xs-12'>
 
                 <div className='xs-12'>
-                    <label>Phone Number</label>
                         <input  
                             className='form-control' 
                             name='phone_number' 
@@ -122,7 +119,6 @@ render(){
 
                 <div className='form-group xs-12'> 
                     <div className='xs-12'>
-                        <label>Email Address</label>
                         <input type='text' 
                         className='form-control' 
                         name='email' 
@@ -133,10 +129,21 @@ render(){
                         />
                     </div>
                 </div>
-
+                <div className='form-group xs-12'>
+                        <div className='xs-12'>
+                            <textarea 
+                                type='text' 
+                                className='form-control' 
+                                name='address' 
+                                placeholder="The Address Where The Product Should Be Delivered To"
+                                onChange={this.handleChange}
+                                value={this.state.address}
+                                required
+                            />
+                        </div>
+                    </div>
                 <div className='form-group xs-12'>
                     <div className='xs-12'>
-                        <label>Full Name</label>
                         <input type='text' 
                         className='form-control' 
                         name='name' 
@@ -151,7 +158,6 @@ render(){
 
             <div className='form-group xs-12'>
                 <div className='xs-12'>
-                    <label>Password</label>
                     <input 
                     type='password' 
                     className='form-control' 
@@ -165,7 +171,6 @@ render(){
             </div>
             <div className='form-group xs-12'>
                 <div className='xs-12'>
-                    <label>Verify Password</label>
                     <input 
                     type='password' 
                     className='form-control' 
@@ -251,7 +256,6 @@ const mapStateToProps = state=>{
         store_products: state.store.products,
         type: state.store.type,
         message: state.store.message,
-
         auth_message: state.auth.message,
         auth_type: state.auth.type
   
@@ -262,7 +266,8 @@ const mapDispatchToProps = dispatch=>{
     return {
         signin :(obj)=> dispatch(signin(obj)),
         signup :(obj)=> dispatch(signup(obj)),
-        plain_clear: ()=>dispatch(plain_clear())
+        plain_clear: ()=>dispatch(plain_clear()),
+        update_step: (step)=>dispatch(update_step(step))
         
     }
 }

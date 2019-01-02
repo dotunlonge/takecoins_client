@@ -4,7 +4,8 @@ const initstate = {
 type: "",
 message: "",
 list: [],
-one: {}
+one: {},
+product_found_id: ""
 };
 
 export default (state=initstate,payload)=>{
@@ -64,7 +65,7 @@ export default (state=initstate,payload)=>{
         return {
             ...state,
             type: productActions.ADD_PRODUCT_WENT,
-            message: payload.message
+            message: payload.message,
         };
 
         case productActions.ADD_PRODUCT_FAILED:
@@ -75,6 +76,28 @@ export default (state=initstate,payload)=>{
         };
 
 
+
+
+
+        case productActions.SEARCH_PRODUCT_REQUEST:
+        return {
+            ...state,
+            type: productActions.SEARCH_PRODUCT_REQUEST
+        };
+    
+        case productActions.SEARCH_PRODUCT_WENT:
+        return {
+            ...state,
+            type: productActions.SEARCH_PRODUCT_WENT,
+            product_found_id: payload.product_id
+        
+        };
+
+        case productActions.SEARCH_PRODUCT_FAILED:
+        return {
+            ...state,
+            type: productActions.SEARCH_PRODUCT_FAILED
+        };
 
         case productActions.DELETE_PRODUCT_REQUEST:
         return {

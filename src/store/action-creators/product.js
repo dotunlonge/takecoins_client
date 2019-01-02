@@ -62,6 +62,29 @@ export const update = (obj,id)=>{
     }
 }
 
+export const search = short_code =>{
+    return dispatch => {
+        dispatch({ type: productActions.SEARCH_PRODUCT_REQUEST})
+        ax({
+            method: "POST",
+            url: e.product.search,
+            data:{
+                short_code
+            },
+            headers:{
+                authorization: retrieveToken()
+            }
+        }).then(res=>{
+
+            dispatch({ type: productActions.SEARCH_PRODUCT_WENT, product_id: res.data.product_id })
+        
+        }).catch(resp=>{
+        
+            dispatch({ type: productActions.SEARCH_PRODUCT_FAILED, message: extractMessage(resp) })
+       
+        })
+    }
+}
 export const delete_product = (id)=>{
     return dispatch=>{
         dispatch({ type: productActions.DELETE_PRODUCT_REQUEST})

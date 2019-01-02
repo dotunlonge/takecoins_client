@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export default styled.div`
-background: #ececec;
-padding-bottom: 5em;
+background: #1b232d;
+height: calc(100vh - 56px);
+
 form{
     background: white;
     border-radius: 5px;

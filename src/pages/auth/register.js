@@ -15,7 +15,9 @@ class Register extends Component {
         password:'',
         verify_password: "",
         store_name: "",
+        address: "",
         name: '',
+        phone_number: '',
         role: 'Buyer'
     }
 }
@@ -49,6 +51,8 @@ submitForm = (e) => {
             password: this.state.password,
             verify_password: this.state.verify_password,
             store_name: this.state.store_name,
+            phone_number: this.state.phone_number,
+            address: this.state.address,
             role: this.state.role
         })
     )
@@ -56,7 +60,6 @@ submitForm = (e) => {
 
   render() {
 
-    console.log(this.state.role)
     return (
      <div className="xs-12 full">
      <div className="c-w i-h">
@@ -79,30 +82,72 @@ submitForm = (e) => {
             <div className="form-group">
               <input className="form-control" 
               name="name" type='text' 
-              placeholder="Username" 
+              placeholder="Full Name" 
               required onChange={this.handleChange}/>
             </div>
-            
-    
-               
-                {this.state.role === "Seller" && 
-                <React.Fragment>
-                <div className="form-group">
-                    <input className="form-control" 
-                    name="email" type='email' 
-                    placeholder="Email Address" 
-                    required onChange={this.handleChange}/>
-                </div>
 
+            {this.state.role === "Buyer" &&
+                <React.Fragment>
+                    <div className='form-group  xs-12'>
+                        <input  
+                            className='form-control' 
+                            name='phone_number' 
+                            type='tel'
+                            placeholder="Your Phone Number"
+                            onChange={this.handleChange}
+                            value={this.state.phone_number}
+                            required
+                        />
+                    </div>
+                    
+                    <div className='form-group xs-12'> 
+                        <div className='xs-12'>
+                            <input type='text' 
+                            className='form-control' 
+                            name='email' 
+                            placeholder="Your Email Address"
+                            onChange={this.handleChange}
+                            value={this.state.email}
+                        required
+                            />
+                        </div>
+                    </div>
+
+                    <div className='form-group xs-12'>
+                        <div className='xs-12'>
+                            <textarea 
+                                type='text' 
+                                className='form-control' 
+                                name='address' 
+                                placeholder="Your Address"
+                                onChange={this.handleChange}
+                                value={this.state.address}
+                                required
+                            />
+                        </div>
+                    </div>
+                    
+                </React.Fragment>
+            }
+
+            
+            {this.state.role === "Seller" && 
+                <React.Fragment>
                     <div className="form-group">
-                        <input className="form-control" name="store_name"
-                        type='text' placeholder="Your Store Name"
-                        value={this.state.store_name}
+                        <input className="form-control" 
+                        name="email" type='email' 
+                        placeholder="Email Address" 
                         required onChange={this.handleChange}/>
                     </div>
+
+                <div className="form-group">
+                    <input className="form-control" name="store_name"
+                    type='text' placeholder="Your Store Name"
+                    value={this.state.store_name}
+                    required onChange={this.handleChange}/>
+                </div>
                 </React.Fragment>
-             
-                }
+            }
 
                 <div className="form-group">
                     <input className="form-control" name="password"

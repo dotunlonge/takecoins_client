@@ -1,8 +1,9 @@
 import React from 'react';
 import SET from "../../styles/settings";
-import { get_api_key } from '../../store/action-creators/settings';
+import { get_api_key,get_your_settings, update_settings } from '../../store/action-creators/settings';
 import {connect} from 'react-redux';
-
+import { notify } from '../../store/action-creators/app';
+import settings from '../../store/actions/settings';
 
 const banks = [
     { "id": "1", "name": "Access Bank" ,"code":"044" },
@@ -34,23 +35,49 @@ const banks = [
 class DashSettings extends React.Component{
     constructor(props){
         super(props);
+        // props.get_your_settings();
         this.state = {
-            account_number:"", account_name:"", bank_name:"", who_bears_charges:"", get_paid_in:""
+            bank_account_number:"",
+            bank_account_name:"",
+            who_bears_charges: "",
+            get_paid_in:"Store", 
+            ethereum_address: "",
+            bitcoin_address: "",
+            bank_name: banks[0].code
         }
+    }
+
+    componentWillMount(){
+
+        this.setState({
+            who_bears_charges: this.props.who_bears_charges,
+            get_paid_in: this.props.get_paid_in,
+            ethereum_address: this.props.ethereum_address || '',
+            bitcoin_address: this.props.bitcoin_address || '',
+            bank_account_number: this.props.bank_account_number,
+            bank_account_name: this.props.bank_account_name,
+            bank_name: this.props.bank_name
+        })
     }
 
     componentWillReceiveProps(nextProps){
         if(this.props !== nextProps){
-            const { account_number, account_name, bank_name, who_bears_charges, get_paid_in } = nextProps.user_store_details;
-            this.setState({
-                account_number, account_name, bank_name, who_bears_charges, get_paid_in
-            })
+            if(nextProps.type === settings.UPDATE_YOUR_SETTINGS_WENT){
+                console.log("success")
+                notify(<p style={{color: 'white'}}>{nextProps.message}</p>,"success")
+            }
+            if(nextProps.type === settings.UPDATE_YOUR_SETTINGS_FAILED){
+                console.log("error")
+                notify(<p style={{color: 'white'}}> {nextProps.message}</p>,"error");
+            }
         }
     }
 
     getAPIKeys = ()=>{
         this.props.dispatch(get_api_key())
     }
+
+
 
     handleChange=e=>{
         e.persist();
@@ -61,15 +88,34 @@ class DashSettings extends React.Component{
     }
     
     handleSubmit = e =>{
+        e.preventDefault();
+        this.props.update_your_settings({
+            who_bears_charges: this.state.who_bears_charges,
+            accept_payments_in_fiat: this.state.get_paid_in  === "Fiat",
+            ethereum_address: this.state.ethereum_address,
+            bitcoin_address: this.state.bitcoin_address,
+            bank_account_number: this.state.bank_account_number,
+            bank_account_name: this.state.bank_account_name,
+            bank_name: this.state.bank_name
 
+        })
     }
 
     render(){
-        const {who_bears_charges, get_paid_in, bank_name, account_name, account_number} = this.state;
+        const {
+                who_bears_charges,
+                get_paid_in,
+                bank_name,
+                bank_account_name,
+                bank_account_number,
+                ethereum_address,
+                bitcoin_address
+            } = this.state;
+
 
         return <SET className='xs-12'>
         <div className='xs-12 contain'>
-            <form className='xs-10 xs-off-1 sm-6 sm-off-3 pad'>
+            <form className='xs-10 xs-off-1 sm-6 sm-off-3 pad' onSubmit={this.handleSubmit}>
                 
                 <div className="form-group">
                     <label>Who Should Bear The Fees ?</label>
@@ -83,32 +129,52 @@ class DashSettings extends React.Component{
                 
                     <label>How Would You Like To Get Paid ?</label>
                     <select name="get_paid_in" className="form-control" value={get_paid_in} onChange={this.handleChange}>
-                        {/* <option value="Store"> In Cryptocurrency </option> */}
+                        <option value="Crypto"> In Cryptocurrency </option>
                         <option value="Fiat"> In Fiat </option>
                     </select>
                 </div>
+                {this.state.get_paid_in === "Crypto" &&
+                <React.Fragment>
+                    <div className="form-group">
+                        <label> Ethereum Address </label>
+                        <input name='ethereum_address' className='form-control' value={ethereum_address} onChange={this.handleChange}/>
+                    </div>
 
-                <div className="form-group">
-                    <label> Account Number </label>
-                    <input name='account_number' className='form-control' value={account_number} onChange={this.handleChange}/>
-                </div>
+                    <div className="form-group">
+                        <label> Bitcoin Address </label>
+                        <input name='bitcoin_address' className='form-control' value={bitcoin_address} onChange={this.handleChange}/>
+                    </div>
+                </React.Fragment>
+                }
 
-                <div className="form-group">
-                    <label> Account Name </label>
-                    <input name='account_name' className='form-control' value={account_name} onChange={this.handleChange}/>
-                </div>
-
-                <div className="form-group">
-                    <label> Bank Name </label>
-                    <select name= 'bank_name' className="form-control" value={bank_name} onChange={this.handleChange}>
-                        {banks.map((b,i)=>{
-                            return <option value={b.code}>{b.name}</option>
-                        })}
-                    </select>
-                </div>
+                {this.state.get_paid_in === "Fiat" && 
+                <React.Fragment>
                 
+                    <div className="form-group">
+                        <label> Account Number </label>
+                        <input name='bank_account_number' className='form-control' value={bank_account_number} onChange={this.handleChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label> Account Name </label>
+                        <input name='bank_account_name' className='form-control' value={bank_account_name} onChange={this.handleChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <label> Bank Name </label>
+                        <select name= 'bank_name' className="form-control" value={bank_name} onChange={this.handleChange}>
+                            {banks.map((b,i)=>{
+                                return <option value={b.code} key={i}>{b.name}</option>
+                            })}
+                        </select>
+                    </div>
+                
+                </React.Fragment>
+             
+                }
+
                 <div className='form-group'>
-                        <input className='btn btn-success' name='submit' value="Save"/>
+                        <button className='btn btn-success' name='submit' type='submit'> Save </button>
                     </div>
             </form>
             </div>
@@ -117,9 +183,39 @@ class DashSettings extends React.Component{
 }
 
 const mapStateToProps = state =>{
+
+    const {
+        bank_name, bank_account_name, bank_account_number,
+        accept_payments_in_fiat,  ethereum_address,
+        bitcoin_address
+    } = state.auth.credentials;
+
+    const {
+        who_bears_charges
+    } = state.auth.credentials.store;
+
     return {
         credentials: state.settings.api_credentials,
-        user_store_details: state.auth.credentials.store || {}
+        user_store_details: state.auth.credentials.store || {},
+        
+        type: state.settings.type,
+        message: state.settings.message,
+
+        who_bears_charges,
+        get_paid_in: accept_payments_in_fiat === true ? "Fiat": "Crypto",
+        ethereum_address,
+        bitcoin_address,
+        bank_account_name,
+        bank_account_number,
+        bank_name
     }
 }
-export default connect(mapStateToProps)( DashSettings );
+
+const mapDispatchToProps = dispatch =>{
+    return {
+        get_your_settings: ()=> dispatch( get_your_settings()),
+        update_your_settings: obj => dispatch( update_settings(obj))
+    }
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( DashSettings );

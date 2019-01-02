@@ -1,9 +1,22 @@
 import s from 'styled-components';
 
 export default s.div`
+
+.match{
+    margin: 5px 0;
+    display: block;
+    font-size: 12px;
+    &.found{
+        color: teal;
+    }
+    &.not-found{
+        color: red;
+    }
+}
+
 height: 100vh;
 overflow: auto;
-background: black; //#1c2338;
+background: #1b232d; //#1c2338;
 position: relative;
 
 h1{
@@ -20,10 +33,10 @@ p{
 }
 
 .form-con{
+
     background: white;
-    padding: 2em;
+    padding: 3% 4%;
     z-index: 1;
-    border-radius: 4px;
     text-align: left;
 
     div{
@@ -47,7 +60,7 @@ p{
         }
 
         .form-group{
-            margin: 1.5em 0;
+            margin: 0.95em 0;
         }
 
         label{
@@ -74,13 +87,13 @@ p{
     .form-group{
         &.bar{
             border-top: 1px solid #eee;
-            padding: 15px 0 0px;
-            margin: 15px 0 0;
+            padding: 15px 0 0;
+            margin: 10px 0 0;
         }
     }
     h4{
         font-weight: 300;
-        font-size: 20px;
+        font-size: 16px;
         padding: .25em .5em;
         color: #666;
     }
@@ -103,6 +116,8 @@ p{
         background: #e4e4e4;
         padding: 1em;
         border-radius: 5px;
+        font-size: 13px;
+        overflow-wrap: break-word;
     }
 }
 

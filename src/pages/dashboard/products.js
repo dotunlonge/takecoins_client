@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import { find_sellers_products } from '../../store/action-creators/product';
 
 const ProductW = styled.div`
-padding: 1em 0;
+    padding: 1em 0;
 
     h3{
         color: white;
@@ -54,7 +54,7 @@ class DashProducts extends React.Component{
                     <Link to="/dashboard/products/new" className='btn btn-info f-r'>Add New Product</Link>
                 </div>
                 
-                <div className='xs-12'>
+                <div className='xs-10 xs-off-1'>
                     <Table data={list}/>
                 </div>
             

@@ -11,8 +11,8 @@ export default class Table extends React.Component{
                     <label>Filter: </label>
                     <select name="showOnly" id="showOnly">
                         <option value=""> Show Everything </option>
-                        <option value=""> Show Only Resolved </option>
-                        <option value=""> Show Only Unresolved </option>
+                        <option value=""> Show Only Delivered </option>
+                        <option value=""> Show Only Not Delivered </option>
                         
                     </select>
                 </div>
@@ -42,9 +42,18 @@ export default class Table extends React.Component{
                     <p>{datum.buyer.name}</p>
                     <label>Buyer Address</label>
                     <p> {datum.buyer.address}</p>
+
+                    <label>Buyer Email</label>
+                    <p>{datum.buyer.email}</p>
+                    <label>Buyer Number</label>
+                    <p> {datum.buyer.phone_number}</p>
+                    
                 </div>
             
             <div className="xs-12 sm-3 td">
+                <label> Product Short Code </label>
+                <p> {datum.product.short_code}</p>
+                
                 <label> Product Id </label>
                 <p> {datum.product.id}</p>
                 <label> Product Name </label>

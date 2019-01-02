@@ -4,9 +4,17 @@ import Table from "../../../components/shared/table/homepage";
 import {connect} from 'react-redux';
 
 const HomeW = styled.div`
+    
+    .has-link{
+        background: white;
+        margin: 15px 0;
+        padding: 10px;
 
-    background: #ececec;
-    padding: 1em;
+        p{
+            padding: 15px 0 0;
+        }
+    }
+    padding: 1em 0em 1em 0em;
     margin: auto;
 
     .white{
@@ -21,37 +29,39 @@ const HomeW = styled.div`
         min-height: 75px;
         padding: 1em;
 
-
         h4{
             font-weight: 300;
             font-size: 14px;
         }
 
-        h2{
-
-        }
-
     }
    
 
-    .well.well-sm{
+    .wel.well-sm{
 
-        padding: .8em 25px;
-        background: silver;
-        margin: 0 0 15px;
-        width: auto;
+        padding: .8em 0;
+        background: #545c65;
         display: inline-block;
         border-radius: 5px;
-
+        margin-bottom: 0px;
+        
         a{
+
             color: snow;
-            cursor: unset;
+            overflow-wrap: break-word;
+            font-size: 14px;
+            font-weight: 300;
+            display: block;
+            text-align: left;
+            padding-top: 7px;
+        
+            @margin(min-width: 768px){
+                padding-left: 20px;
+            }
         }
 
 
         #copy-link{
-            margin-left: 20px;
-            background: #2196F3;
             font-size: 14px;
             color: white;
             border-color: transparent;
@@ -68,7 +78,50 @@ const HomeW = styled.div`
     }
 
 `;
+
+
+
 class SellerDashHome extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = { 
+            copySuccess: 'Copy' 
+        }
+      }
+    copyText = (element) =>{
+        element = this.refs.textarea;
+        var range, selection;
+      
+        if (document.body.createTextRange) {
+          range = document.body.createTextRange();
+          range.moveToElementText(element);
+          range.select();
+        } else if (window.getSelection) {
+          selection = window.getSelection();        
+          range = document.createRange();
+          range.selectNodeContents(element);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        
+        try {
+          document.execCommand('copy');
+          this.setState({ copySuccess: 'Copied!' });
+
+          setTimeout(()=>{
+            this.setState({ copySuccess: 'Copy' });
+          },3000)
+
+        }
+        catch (err) {
+            this.setState({ copySuccess: 'Unable To Copy!' });
+            setTimeout(()=>{
+                this.setState({ copySuccess: 'Copy' });
+              },3000)
+    
+        }
+      }
+
     render(){
         const data = [
             {
@@ -94,23 +147,29 @@ class SellerDashHome extends React.Component{
             }]
         
          
-        return <div className='xs-12'> 
-          <div className='xs-12'>
-    
-            <HomeW className='xs-12'>
+        return <div className='xs-12 sm-10 sm-off-1'> 
+          <HomeW className='xs-12'>
 
-            <div className="xs-12 t-c">
-            <p> Share This Link With Your Customers To Collect Crypto Payments  </p>
-            <div className="well well-sm"> 
-                <a href={`${window.location.origin}/${this.props.store_name}`} target="_blank" rel="noopener noreferrer">
-                {`${window.location.origin}/${this.props.store_name}`}
-
-                </a>
-
-                <button id='copy-link'> Copy Link </button>
+            <div className="xs-12 t-c has-link">
+                <p className='xs-12 sm-6'>  Share This Link With Your Customers To Collect Crypto Payments  </p>
+                
+                <div className="wel well-sm xs-12 sm-6"> 
+                    <div className='xs-10 xs-off-1'>
+                        <a href={`${window.location.origin}/${this.props.store_name}`} target="_blank" rel="noopener noreferrer" className='xs-8' ref={"textarea"}>
+                        {`${window.location.origin}/${this.props.store_name}`}
+                        </a>
+                        {
+                            document.queryCommandSupported('copy') &&
+                            <div className='xs-4'>
+                            <button className='btn btn-success' id='copy-link' onClick={this.copyText}> {this.state.copySuccess} </button>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
-            </div>
-            
+
+            <div className='xs-12 body'>
+
                 <div className="xs-12 sm-3">
                     <div className="xs-12 sm-11 card white bordered">
                         <h4>Received Today</h4>
@@ -134,10 +193,11 @@ class SellerDashHome extends React.Component{
                 </div>
                 
                 <div className="xs-12 sm-3">
-                    <div className="xs-12 sm-11 card white bordered">
+                    <div className="xs-12  card white bordered">
                     <h4>Transactions Total</h4>
                         <h2>-</h2>
                     </div>
+                </div>
                 </div>
                 
             </HomeW>
@@ -146,7 +206,7 @@ class SellerDashHome extends React.Component{
                 <Table data={data}/>
             </div>
           </div>
-        </div>
+    
     }
 }
 

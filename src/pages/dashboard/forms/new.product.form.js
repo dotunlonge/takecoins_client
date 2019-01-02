@@ -49,7 +49,6 @@ class NewProduct extends React.Component{
             }
             if(nextProps.type === product.ADD_PRODUCT_WENT){
                 notify(<p style={{color: 'white'}}> {nextProps.message}</p>,"success");
-                // nextProps.history.push("/dashboard/products")
             }
         }
     }
@@ -96,7 +95,7 @@ class NewProduct extends React.Component{
                         <div className='form-group'>
                         <label>Product Description</label>
                        
-                            <textarea className="form-control" name="description" placeholder="Product Description" required onChange={this.handleChange}/>
+                            <textarea className="form-control" name="description" placeholder="Product Description" onChange={this.handleChange}/>
                         </div>
                         <div className='form-group'>
                             <input className="form-control btn btn-success" name="submit"  type='submit'
