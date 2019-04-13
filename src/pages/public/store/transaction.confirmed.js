@@ -68,6 +68,13 @@ class TransactionConfirmed extends React.Component{
                     
                 </W>
             
+
+            case store.FIND_FULL_TX_FAILED:    
+                return <div className='xs-12 t-c'>
+                    <h4> {this.props.message}</h4>
+                    <p>Please Refresh The Page.</p>
+                </div>
+        
             default:
                 return <W className='xs-12 step-2'>
                     <Spinner/>
@@ -82,7 +89,8 @@ const mapStateToProps = state =>{
     return {
         transaction_details: state.store.transaction_details,
         processed_purchase_info: state.store.processed_purchase_info,
-        type: state.store.type
+        type: state.store.type,
+        message: state.store.message
     }
 }
 

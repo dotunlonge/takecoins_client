@@ -93,8 +93,7 @@ import moment from 'moment';
                 <div className="form-group">
                     <label>Filter: </label>
                     <select name="showOnly" id="showOnly" onChange={e=>this.filter(e.target.value)}>
-                    <option value="not-deleted"> Show Not Deleted </option>
-
+                        <option value="not-deleted"> Show Not Deleted </option>
                         <option value="all"> Show Everything </option>
                         <option value="deleted"> Show Only Deleted </option>
                     </select>
@@ -105,13 +104,13 @@ import moment from 'moment';
             <div className="xs-12 sm-6 th">
                 <h5>Product</h5>
             </div>
-            <div className="xs-12 sm-3 th">
+            <div className="xs-12 sm-6 th">
                 <h5>Sales</h5>
             </div>
-            
+{/*             
             <div className="xs-12 sm-3 th">
                 <h5> Pictures </h5>
-            </div>   
+            </div>    */}
         </div>
 
         {
@@ -152,6 +151,7 @@ import moment from 'moment';
 
                     <label>Date Added</label>
                     <p> { moment(datum.createdAt).format("YYYY-MM-DD hh:mm:ss") } </p>
+                    
                     <label> Actions </label>
                     <div className="xs-12 options">
                         <Link to={`/dashboard/products/edit/${datum.product_id}`} className='btn btn-success'>Edit</Link>
@@ -166,7 +166,8 @@ import moment from 'moment';
                         }}>Delete</button>
                     </div>
                 </div>
-                <div className='xs-12 sm-3 td'>
+
+                <div className='xs-12 sm-6 td'>
                     
                     <label>Quantiy Available</label>
                     <p>{datum.quantity.available}</p>
@@ -177,14 +178,16 @@ import moment from 'moment';
                     <label>Sales Total</label>
                     <p>{datum.quantity.sold_money} {datum.currency}</p>
                     
-                    
                 </div>
-                <div className='xs-12 sm-3 td'>
+
+
+                {/* <div className='xs-12 sm-3 td'>
                     {datum.images.map((p,i)=>{
                         return <img src={p} className="xs-4 sm-5" height="100px" 
                         style={{objectFit: "cover", margin:"1em .5em"}} alt="" key={i}/>
                     })}
                 </div>
+                 */}
                 </div>
         })}            
      

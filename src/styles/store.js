@@ -32,13 +32,20 @@ p{
     padding-bottom: 1.5em;
 }
 
+canvas {
+    margin: auto;
+    display: block;
+}
+
 .form-con{
 
     background: white;
-    padding: 3% 4%;
+    padding: 20px 35px;
     z-index: 1;
     text-align: left;
-
+    @media(min-width: 768px){
+        border-radius: 5px;
+    }
     div{
         .unit-price{
         label{
@@ -100,7 +107,7 @@ p{
 
     #refresh{
         color: darkslategray;
-        font-size: 14px;
+        font-size: 12px;
         padding: 0;
         margin: 0;
         height: 40px;
@@ -117,7 +124,14 @@ p{
         padding: 1em;
         border-radius: 5px;
         font-size: 13px;
+        font-size: 13px;
         overflow-wrap: break-word;
+        text-overflow: inherit;
+
+        @media(max-width: 768px){
+            max-width: 304px;
+        }
+    
     }
 }
 

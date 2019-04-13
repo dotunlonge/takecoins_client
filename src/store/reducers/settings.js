@@ -8,6 +8,12 @@ const initstate = {
 
 export default (state=initstate,payload)=>{
     switch(payload.type){
+        
+        case settingsActions.CLEAR:
+        return {
+            ...state,
+            type: settingsActions.CLEAR
+        }
 
         case settingsActions.UPDATE_YOUR_SETTINGS_WENT:
         return {
@@ -28,12 +34,14 @@ export default (state=initstate,payload)=>{
             ...state,
             type: settingsActions.GET_API_KEY_REQUEST
         }
+
         case settingsActions.GET_API_KEY_SUCCESSFUL:
         return {
             ...state,
             type: settingsActions.GET_API_KEY_SUCCESSFUL,
             api_credentials: payload.data
         }
+
         case settingsActions.GET_API_KEY_FAILED:
         return {
             ...state,

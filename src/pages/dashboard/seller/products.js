@@ -1,10 +1,10 @@
 import React from 'react';
-import Table from "../../components/shared/table/product";
+import Table from "../../../components/shared/table/product";
 
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import { find_sellers_products } from '../../store/action-creators/product';
+import { find_sellers_products } from '../../../store/action-creators/product';
 
 const ProductW = styled.div`
     padding: 1em 0;

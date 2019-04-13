@@ -5,6 +5,7 @@ import storeA from '../../../store/actions/store';
 import Icon from "react-fa";
 import { start_listening_for_transaction, process_purchase_information, update_step } from '../../../store/action-creators/store';
 import config from '../../../config';
+import CopyAddress from '../../../components/standalone/copy-address';
 
 class ViewTwo extends React.Component{
     constructor(props){
@@ -213,14 +214,25 @@ class ViewTwo extends React.Component{
                             {processed_purchase_info.amount_expected.coin} </span>
                         </h4>
                     </div>
+                    {processed_purchase_info.user_is_paid_in_fiat === false ?
+                        <div className='xs-6'>
+                            <label className='t-c'>Fee</label>
 
-                    <div className='xs-6'>
-                        <label className='t-c'>Fees Rate</label>
-                        <h4>{processed_purchase_info.fee_percentage}%
-                        <span style={{color: "slateblue", fontSize: "11.5px", paddingTop: "5px", display:"block" }}> + {processed_purchase_info.fixed_fee}</span>
-                        </h4>
-                    
-                    </div>
+                            <h4>{processed_purchase_info.actual_fees_added} {processed_purchase_info.amount_expected.fiat}
+                            {
+                            processed_purchase_info.amount_expected.fiat === "NGN" && <span style={{color: "slateblue", fontSize: "11.5px", paddingTop: "5px", display:"block" }}>  0.5 USD</span> 
+                            }
+                            </h4>   
+                        </div>
+                    :
+                        <div className='xs-6'>
+                            <label className='t-c'>Fees Rate</label>
+                            <h4>{processed_purchase_info.fee_percentage}%
+                            <span style={{color: "slateblue", fontSize: "11.5px", paddingTop: "5px", display:"block" }}> + {processed_purchase_info.fixed_fee}</span>
+
+                            </h4>
+                        </div>
+                    }
                 </div>
                 </React.Fragment>
                 :
@@ -247,13 +259,11 @@ class ViewTwo extends React.Component{
             </React.Fragment>
                 }
 
-
-                <div className='form-group xs-12 bar t-c'>
-                    <div className='xs-10 xs-off-1'>
-                        <label className='t-c'>Please send the <strong>Amount Expected</strong> to this Address</label>
-                        <div className="well">{processed_purchase_info.public_key}</div>
-                    </div>
-                </div>   
+                <CopyAddress address={processed_purchase_info.public_key}/>
+                
+                {/* <div className = 'form-group xs-12'>
+                     <QRCode value={processed_purchase_info.public_key} size="256" />
+                </div> */}
 
                 <div className='form-group xs-12'>
                     <div className='xs-10 xs-off-1'>

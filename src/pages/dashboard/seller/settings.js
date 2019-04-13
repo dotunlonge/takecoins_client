@@ -1,9 +1,9 @@
 import React from 'react';
-import SET from "../../styles/settings";
-import { get_api_key,get_your_settings, update_settings } from '../../store/action-creators/settings';
+import SET from "../../../styles/settings";
+import { get_api_key,get_your_settings, update_settings } from '../../../store/action-creators/settings';
 import {connect} from 'react-redux';
-import { notify } from '../../store/action-creators/app';
-import settings from '../../store/actions/settings';
+import { notify } from '../../../store/action-creators/app';
+import settings from '../../../store/actions/settings';
 
 const banks = [
     { "id": "1", "name": "Access Bank" ,"code":"044" },
@@ -35,7 +35,6 @@ const banks = [
 class DashSettings extends React.Component{
     constructor(props){
         super(props);
-        // props.get_your_settings();
         this.state = {
             bank_account_number:"",
             bank_account_name:"",
@@ -62,22 +61,23 @@ class DashSettings extends React.Component{
 
     componentWillReceiveProps(nextProps){
         if(this.props !== nextProps){
+            
             if(nextProps.type === settings.UPDATE_YOUR_SETTINGS_WENT){
                 console.log("success")
                 notify(<p style={{color: 'white'}}>{nextProps.message}</p>,"success")
             }
+
             if(nextProps.type === settings.UPDATE_YOUR_SETTINGS_FAILED){
                 console.log("error")
                 notify(<p style={{color: 'white'}}> {nextProps.message}</p>,"error");
             }
+            
         }
     }
 
     getAPIKeys = ()=>{
         this.props.dispatch(get_api_key())
     }
-
-
 
     handleChange=e=>{
         e.persist();

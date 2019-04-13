@@ -36,10 +36,14 @@ export const DW = s.div`
 
 const Tw = s.div`
 
+.filter{
+    padding: 1em;
+}
+
 .fetching{
     padding: 1em;
-
 }
+
 .options{
     a,button{
         margin-right: 15px;
@@ -86,13 +90,17 @@ const Tw = s.div`
         
         label{
             font-size: 12px;
-            font-weight: 500;
+            font-weight: 900;
             color: #555;
             margin: 15px 0 5px;
             display: block;
         }
 
         button{
+            font-size: 14px;
+        }
+
+        a{
             font-size: 14px;
         }
 

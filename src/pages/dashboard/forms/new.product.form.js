@@ -87,7 +87,7 @@ class NewProduct extends React.Component{
                         
                             <select className="form-control" name="currency" placeholder="Currency" required onChange={this.handleChange}>
                                 <option value="NGN"> NGN</option>
-                                <option value="USD"> USD</option>
+                                {/* <option value="USD"> USD</option> */}
                                 
                             </select>
                         </div>

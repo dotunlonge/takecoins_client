@@ -21,7 +21,7 @@ export default connect()(class Navbar extends React.Component{
                     <li><NavLink to="/dashboard">My Orders</NavLink></li>
                     <li><NavLink to="/dashboard/account">My Account</NavLink></li>
                     <li><NavLink to="/dashboard/products">Products</NavLink></li>
-                    <li><NavLink to="/dashboard/withdrawals">Withdrawals</NavLink></li>
+                    {/* <li><NavLink to="/dashboard/withdrawals">Withdrawals</NavLink></li> */}
                     <li><NavLink to="/dashboard/settings">Settings</NavLink></li>
                     <li><NavLink to="#" onClick={()=>this.props.dispatch(signout())}>Logout</NavLink></li>
                 </div>

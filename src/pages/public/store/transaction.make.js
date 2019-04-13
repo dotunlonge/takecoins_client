@@ -72,9 +72,7 @@ class ViewOne extends React.Component{
     handleSearch = e => {
         e.persist();
         clearTimeout(this.TypingId);
-       
         let {  value } = e.target;
-        
         this.TypingId = setTimeout(() => {
           this.setState(
             {
@@ -205,7 +203,7 @@ class ViewOne extends React.Component{
                              
                             <div className='form-group xs-12'>
                                 <div className='xs-8'>
-                                    <label>Select a product from the list below</label>
+                                    <label>Select Product </label>
                                     <select name='products' className='form-control' 
                                     value={product_selected.product_id} 
                                     onChange={this.handleProductSelect}>
@@ -225,7 +223,7 @@ class ViewOne extends React.Component{
         
                             <div className='form-group xs-12'>
                                 <div className='xs-7'>
-                                    <label>How many would you be buying ?</label>
+                                    <label>Purchase Quantity ?</label>
                                     <input type='number' 
                                     className='form-control' 
                                     name='quantity' 

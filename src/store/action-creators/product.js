@@ -4,8 +4,6 @@ import e from "../../endpoints";
 import { retrieveToken } from "../../helpers/TokenManager";
 import { extractMessage } from "../../helpers/utils";
 
-
-
 export const get_one = (id)=>{
     return  dispatch=>{
          dispatch({ type: productActions.FIND_SELLER_ONE_PRODUCT_REQUEST})
@@ -85,6 +83,7 @@ export const search = short_code =>{
         })
     }
 }
+
 export const delete_product = (id)=>{
     return dispatch=>{
         dispatch({ type: productActions.DELETE_PRODUCT_REQUEST})

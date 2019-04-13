@@ -39,7 +39,7 @@ export default styled.div`
         margin:0  7.5px;
         background: transparent;
         border-width: 1px;
-        font-size: 22px;
+        font-size: 14px;
         font-weight: 200;
         width: 100px;
     }

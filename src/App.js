@@ -10,12 +10,13 @@ import ProtectedRoute from "./layouts/protected.layout";
 import DashHome from './pages/dashboard';
 import Store from './pages/public/store/index';
 
-import DashSettings from './pages/dashboard/settings';
-import DashProducts from './pages/dashboard/products';
+import DashSettings from './pages/dashboard/seller/settings';
+import DashProducts from './pages/dashboard/seller/products';
 import NewProduct from './pages/dashboard/forms/new.product.form';
 import EditProduct from './pages/dashboard/forms/edit.product.form';
 import p404 from "./pages/public/p404";
 import forgotPassword from './pages/auth/forgot.password';
+import myAccount from './pages/dashboard/seller/my-account';
 
 class App extends Component {
   render() {
@@ -31,6 +32,8 @@ class App extends Component {
 
         <ProtectedRoute exact path = "/dashboard" component={DashHome}/>
         <ProtectedRoute exact path = "/dashboard/products" component={DashProducts}/>
+        <ProtectedRoute exact path = "/dashboard/account" component={myAccount}/>
+        
         <ProtectedRoute exact path = "/dashboard/products/new" component={NewProduct}/>
         <ProtectedRoute exact path = "/dashboard/products/edit/:id" component={EditProduct}/>
        

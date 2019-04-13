@@ -26,6 +26,9 @@ export const get_api_key = ()=>{
 
 export const get_your_settings = () => {
     return dispatch => {
+        
+        dispatch({type: settings.CLEAR })
+        
         axios({
             url:endpoints.settings,
             method: "GET",
@@ -46,6 +49,8 @@ export const get_your_settings = () => {
 
 export const update_settings = obj => {
     return dispatch => {
+        dispatch({type: settings.CLEAR })
+        
         axios({
             url:endpoints.settings,
             method: "POST",
